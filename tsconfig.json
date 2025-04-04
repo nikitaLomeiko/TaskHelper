@@ -21,7 +21,7 @@
       "widgets/*": ["widgets/*"],
       "features/*": ["features/*"],
       "entities/*": ["entities/*"],
-      "shared/*": ["shared/*"],
+      "shared/*": ["shared/*"]
     },
 
     /* Linting */
@@ -30,6 +30,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/features/create-lot/model/config", "src/app/stylesheet/index.css"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/features/create-lot/model/config",
+    "src/app/stylesheet/index.css"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
