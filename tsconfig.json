@@ -1,7 +1,35 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+
+    "baseUrl": "src",
+    "paths": {
+      "app/*": ["app/*"],
+      "pages/*": ["pages/*"],
+      "widgets/*": ["widgets/*"],
+      "features/*": ["features/*"],
+      "entities/*": ["entities/*"],
+      "shared/*": ["shared/*"],
+    },
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/features/create-lot/model/config", "src/app/stylesheet/index.css"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
