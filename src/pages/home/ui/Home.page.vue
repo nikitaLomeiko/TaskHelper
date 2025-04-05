@@ -65,7 +65,6 @@ const sideBarStore = useSideBarStore();
 "
     />
   </div>
-  >>>>>>> nikita-dev
 </template>
 
 <style scoped>

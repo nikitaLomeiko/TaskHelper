@@ -11,9 +11,4 @@ const props = defineProps<{
   <Button @click="func" :label="name" />
 </template>
 
-<style>
-Button {
-  width: 10em;
-  background-color: rgb(83, 242, 83);
-}
-</style>
+<style></style>

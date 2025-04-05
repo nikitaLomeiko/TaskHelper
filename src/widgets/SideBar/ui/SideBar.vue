@@ -19,9 +19,6 @@ const visible = ref(true);
       :dismissable="false"
       position="left"
     >
-      <!-- <PanelMenu :model="keysSideBar" /> -->
-
-      <panelMenu />
     </Sidebar>
 
     <Button

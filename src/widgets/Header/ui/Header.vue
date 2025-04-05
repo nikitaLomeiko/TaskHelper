@@ -13,7 +13,7 @@ const flag = ref(false);
 
 <template>
   <div class="cont-header flex w-[100%] justify-between px-10 md:gap-[10em]">
-    <h1 class="title">dasdas</h1>
+    <h1 class="title">{{ title }}</h1>
     <div
       class="icon"
       @click="flag = !flag"
