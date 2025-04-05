@@ -1,9 +1,8 @@
 <script setup lang="ts">
-  import './stylesheet/index.css'
 </script>
 
 <template>
-  <RouterView />
+  chat
 </template>
 
 <style scoped>
