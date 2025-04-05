@@ -10,7 +10,7 @@ const visible = ref(true);
 </script>
 
 <template>
-  <div class="card flex justify-content-center fixed relative">
+  <div class="card flex justify-content-center fixed">
     <Sidebar
       v-model:visible="sideBarStore.visible"
       header="TaskHelper"
@@ -19,9 +19,7 @@ const visible = ref(true);
       :dismissable="false"
       position="left"
     >
-      <!-- <PanelMenu :model="keysSideBar" /> -->
-
-      <panelMenu />
+    
     </Sidebar>
 
     <Button

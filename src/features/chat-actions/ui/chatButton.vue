@@ -12,8 +12,4 @@ const props = defineProps<{
 </template>
 
 <style>
-Button {
-  width: 10em;
-  background-color: rgb(83, 242, 83);
-}
 </style>

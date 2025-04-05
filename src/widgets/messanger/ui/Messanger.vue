@@ -40,26 +40,18 @@ const handleSendMessage = (message: IMessage) => {
 const messagesContainer = ref<HTMLElement | null>(null);
 
 
-const scrollToBottom = (behavior: ScrollBehavior = 'auto') => {
+const scrollToBottom = () => {
   nextTick  (() => {
     if (messagesContainer.value) {
       messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
-      
-      // Альтернативный вариант с плавной прокруткой:
-      // messagesContainer.value.scrollTo({
-      //   top: messagesContainer.value.scrollHeight,
-      //   behavior
-      // });
     }
   });
 };
 
-// Прокручиваем при изменении сообщений
 watch(messages, () => {
-  scrollToBottom('smooth'); // Используйте 'auto' для мгновенной прокрутки
+  scrollToBottom();
 }, { deep: true });
 
-// Прокручиваем при монтировании компонента
 onMounted(() => {
   scrollToBottom();
 });
@@ -111,6 +103,7 @@ onMounted(() => {
       />
     </div>
   </div>
+  
   <SendBox
     v-on:close-message="clearMessageSelect"
     :message="messageSelect"
