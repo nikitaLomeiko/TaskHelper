@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Button, PanelMenu, Sidebar } from "primevue";
-import { keysSideBar } from "../keys/keys";
+import { Button, Sidebar } from "primevue";
 import { useSideBarStore } from "../store/SideBarStore";
+import { panelMenu } from "features/panel-menu";
 
 const sideBarStore = useSideBarStore();
 
@@ -10,7 +10,7 @@ const visible = ref(true);
 </script>
 
 <template>
-  <div class="card flex justify-content-center fixed">
+  <div class="card flex justify-content-center fixed relative">
     <Sidebar
       v-model:visible="sideBarStore.visible"
       header="TaskHelper"
@@ -19,11 +19,13 @@ const visible = ref(true);
       :dismissable="false"
       position="left"
     >
-      <PanelMenu :model="keysSideBar" />
+      <!-- <PanelMenu :model="keysSideBar" /> -->
+      <div class="title absolute top-0">dasdasdads</div>
+      <panelMenu />
     </Sidebar>
 
     <Button
-      class="btn transform -rotate-90 transition-transform text-center w-[8em] h-[2em]"
+      class="btn transform -rotate-90 transition-transform text-center w-[8em]"
       icon="pi pi-bars"
       @click="sideBarStore.visible = true"
       label=""

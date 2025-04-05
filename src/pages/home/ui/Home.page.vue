@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Message } from "entities/message";
 import { SendBox } from "features/send-box";
+import { Header } from "widgets/Header";
 import { SideBar } from "widgets/SideBar";
 import { useSideBarStore } from "widgets/SideBar/store";
 
@@ -11,7 +12,16 @@ const sideBarStore = useSideBarStore();
   <SideBar />
   <div
     :style="{ 'margin-left': sideBarStore.visible ? '20rem' : '0' }"
-    class="p-10 flex flex-col gap-10"
+    class="flex flex-col gap-10 transition-all"
+    :class="{ 'bg-gray-50': sideBarStore.visible }"
+  >
+    <Header :title="'dasdasd'" />
+  </div>
+
+  <div
+    :style="{ 'margin-left': sideBarStore.visible ? '20rem' : '0' }"
+    class="p-10 flex flex-col gap-10 h-screen transition-all"
+    :class="{ 'bg-gray-50': sideBarStore.visible }"
   >
     <Message
       v-on:delete="() => null"
