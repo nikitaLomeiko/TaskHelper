@@ -5,12 +5,15 @@ import { useSideBarStore } from "../store/SideBarStore";
 import { useChatItemStore, ChatItem } from "entities/chat-item";
 import ChatButton from "features/chat-actions/ui/chatButton.vue";
 import { storeToRefs } from "pinia";
+import {useWindowSize} from '@vueuse/core'
 
 const sideBarStore = useSideBarStore();
 const chatItemStore = useChatItemStore();
 const { chatItems } = storeToRefs(chatItemStore);
 
 const changedId = ref<string | null>(null);
+
+const {width} = useWindowSize()
 
 const handleChanged = (title: string) => {
   if (changedId.value !== null) {
@@ -26,7 +29,7 @@ const handleChanged = (title: string) => {
       v-model:visible="sideBarStore.visible"
       header="TaskHelper"
       class="sidebar w-full md:w-20rem lg:w-30rem"
-      :modal="false"
+      :modal="width < 768"
       :dismissable="false"
       position="left"
     >

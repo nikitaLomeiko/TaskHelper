@@ -4,16 +4,19 @@ import { SideBar, useSideBarStore } from "widgets/SideBar";
 import { Header } from "widgets/Header";
 import { useChatItemStore } from "entities/chat-item";
 import { storeToRefs } from "pinia";
+import {useWindowSize} from '@vueuse/core'
 
 const sideBarStore = useSideBarStore();
 const chatItemStore = useChatItemStore();
 const {chatItems} = storeToRefs(chatItemStore)
+
+const {width} = useWindowSize();
 </script>
 
 <template>
   <SideBar />
   <div
-    :style="{ 'margin-left': sideBarStore.visible ? '20rem' : '0' }"
+    :style="width > 768 && { 'margin-left': sideBarStore.visible ? '20rem' : '0' }"
     class="px-4 flex flex-col gap-10 h-screen transition-all"
     :class="{ 'bg-gray-50': sideBarStore.visible }"
   >
