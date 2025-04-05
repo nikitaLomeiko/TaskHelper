@@ -50,7 +50,6 @@ const sideBarStore = useSideBarStore();
     <SendBox message="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo nam commodi aspernatur perspiciatis officia sit quisquam distinctio? Quod, ex! Deserunt beatae ex dolorum quis a enim vel possimus aliquid! Molestiae!
 "/>
   </div>
-  >>>>>>> nikita-dev
 </template>
 
 <style scoped>
