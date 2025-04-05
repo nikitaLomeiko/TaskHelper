@@ -3,7 +3,7 @@ import { SendBox } from "features/send-box";
 import { useChatStore } from "../model/pinia/chat.pinia";
 import { IMessage, Message } from "entities/message";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 
 const chat = useChatStore();
 const { messages } = storeToRefs(chat);
@@ -11,6 +11,11 @@ const { messages } = storeToRefs(chat);
 const messageSelect = ref<IMessage | null>(null);
 const isAnswer = ref<boolean>(false);
 const isChange = ref<boolean>(false);
+
+const clearMessageSelect = () => {
+  isChange.value = false;
+  messageSelect.value = null;
+};
 
 const handleAnswerMessage = (message: IMessage) => {
   isAnswer.value = true;
@@ -29,13 +34,39 @@ const handleSendMessage = (message: IMessage) => {
     chat.addMessage(message);
   }
 
-  isAnswer.value = false;
-  messageSelect.value = null;
+  clearMessageSelect()
 };
+
+const messagesContainer = ref<HTMLElement | null>(null);
+
+
+const scrollToBottom = (behavior: ScrollBehavior = 'auto') => {
+  nextTick  (() => {
+    if (messagesContainer.value) {
+      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
+      
+      // Альтернативный вариант с плавной прокруткой:
+      // messagesContainer.value.scrollTo({
+      //   top: messagesContainer.value.scrollHeight,
+      //   behavior
+      // });
+    }
+  });
+};
+
+// Прокручиваем при изменении сообщений
+watch(messages, () => {
+  scrollToBottom('smooth'); // Используйте 'auto' для мгновенной прокрутки
+}, { deep: true });
+
+// Прокручиваем при монтировании компонента
+onMounted(() => {
+  scrollToBottom();
+});
 </script>
 
 <template>
-  <div class="flex flex-col gap-5 h-full justify-end">
+  <div class="flex flex-col gap-5 h-full overflow-y-auto" ref="messagesContainer">
     <div class="w-full flex flex-col gap-2 items-center justify-center h-full">
       <div class="rounded-full w-48 h-48 p-10 flex items-center justify-center mt-2 bg-gray-400">
         <svg
@@ -70,6 +101,7 @@ const handleSendMessage = (message: IMessage) => {
         v-on:bookmark="() => chat.toggleBookmark(item.id)"
         v-on:answer="() => handleAnswerMessage(item)"
         v-on:change="() => handleChangeMessage(item)"
+        v-on:close=""
         :type-author="item.typeAuthor"
         :orientation="item.typeAuthor === 'user' ? 'right' : 'left'"
         :time="item.time"
@@ -80,6 +112,7 @@ const handleSendMessage = (message: IMessage) => {
     </div>
   </div>
   <SendBox
+    v-on:close-message="clearMessageSelect"
     :message="messageSelect"
     :type-message="isAnswer ? 'answer' : isChange ? 'change' : undefined"
     v-on:submit="handleSendMessage"

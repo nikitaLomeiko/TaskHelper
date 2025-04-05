@@ -26,6 +26,17 @@ const triggerFileInput = () => {
   fileInput.value?.click();
 };
 
+const handleNativeKeyDown = (event: KeyboardEvent) => {
+  if (event.key === 'Enter' && event.shiftKey) {
+    return
+  }
+  if (event.key === 'Enter') {
+    handleSubmit()
+    event.preventDefault();
+  }
+};
+
+
 const handleSubmit = () => {
   if (prompt.value) {
     const now = new Date();
@@ -40,7 +51,7 @@ const handleSubmit = () => {
       answerId: props.message?.id,
       isBookmarked: false,
       id: Math.random().toString(16).slice(2),
-      body: prompt.value,
+      body: prompt.value.trim(),
       time: time,
       typeAuthor: "user",
     };
@@ -107,6 +118,7 @@ const handleSubmit = () => {
         <p class="text-gray-600 !text-sm line-clamp-2">{{ props.message.body }}</p>
       </div>
       <Textarea
+        :onkeydown="handleNativeKeyDown"
         size="large"
         placeholder="Введите текст"
         class="w-full h-full max-h-[200px]"
