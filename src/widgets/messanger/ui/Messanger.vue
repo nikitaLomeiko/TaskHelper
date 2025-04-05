@@ -34,23 +34,26 @@ const handleSendMessage = (message: IMessage) => {
     chat.addMessage(message);
   }
 
-  clearMessageSelect()
+  clearMessageSelect();
 };
 
 const messagesContainer = ref<HTMLElement | null>(null);
 
-
 const scrollToBottom = () => {
-  nextTick  (() => {
+  nextTick(() => {
     if (messagesContainer.value) {
       messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
     }
   });
 };
 
-watch(messages, () => {
-  scrollToBottom();
-}, { deep: true });
+watch(
+  messages,
+  () => {
+    scrollToBottom();
+  },
+  { deep: true }
+);
 
 onMounted(() => {
   scrollToBottom();
@@ -58,9 +61,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-5 h-full overflow-y-auto" ref="messagesContainer">
+  <div
+    class="flex flex-col gap-5 h-full overflow-y-auto"
+    ref="messagesContainer"
+  >
     <div class="w-full flex flex-col gap-2 items-center justify-center h-full">
-      <div class="rounded-full w-48 h-48 p-10 flex items-center justify-center mt-2 bg-gray-400">
+      <div
+        class="rounded-full w-48 h-48 p-10 flex items-center justify-center mt-2 bg-gray-400"
+      >
         <svg
           class="size-48 fill-white"
           stroke="currentColor"
@@ -76,10 +84,14 @@ onMounted(() => {
           ></path>
         </svg>
       </div>
-      <h2 class="text-3xl text-black/50">TaskHelper</h2>
-      <p class="w-full max-w-[600px] text-center text-black/20 leading-6">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nam commodi dolor molestiae labore, ad
-        praesentium magnam omnis quo voluptates fugit numquam magni facilis illum. Ex quos fugiat enim deleniti!
+      <h2 class="text-3xl text-black/50 sm: text-1xl">TaskHelper</h2>
+      <p
+        class="w-full max-w-[600px] text-center text-black/20 leading-6 sm: text-xs leading-4"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nam
+        commodi dolor molestiae labore, ad praesentium magnam omnis quo
+        voluptates fugit numquam magni facilis illum. Ex quos fugiat enim
+        deleniti!
       </p>
     </div>
     <div
@@ -103,7 +115,7 @@ onMounted(() => {
       />
     </div>
   </div>
-  
+
   <SendBox
     v-on:close-message="clearMessageSelect"
     :message="messageSelect"
