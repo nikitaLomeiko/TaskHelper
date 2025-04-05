@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Message } from "entities/message";
-import { Sidebar } from "widgets/ui";
-import { useSideBarStore } from "widgets/ui/SideBar/store/SideBarStore";
+import { Sidebar } from "widgets/SideBar/ui";
+import { useSideBarStore } from "widgets/SideBar/model/store/SideBarStore";
 
 const sideBarStore = useSideBarStore();
 </script>

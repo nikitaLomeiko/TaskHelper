@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Button, PanelMenu, Sidebar } from "primevue";
-import { keysSideBar } from "./keys/keys";
-import { useSideBarStore } from "./store/SideBarStore";
+import { keysSideBar } from "../model/keys/keys";
+import { useSideBarStore } from "../model/store/SideBarStore";
 
 const sideBarStore = useSideBarStore();
 
