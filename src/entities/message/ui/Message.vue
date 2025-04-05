@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { IMessageNotID } from "../model/types";
-import Toast from 'primevue/toast';
+import Toast from "primevue/toast";
 import { useToast } from "primevue";
 
 const toast = useToast();
@@ -30,17 +30,26 @@ const {
 const isShowUpdate = ref(false);
 
 const handleCopyMessage = () => {
-  navigator.clipboard.writeText(body).then(function() {
-    toast.add({ severity: 'success', summary: 'Сообщение скопировано в буфер обмена', life: 3000 });
-}, function(err) {
-  console.error('Произошла ошибка при копировании текста: ', err);
-});
+  navigator.clipboard.writeText(body).then(
+    function () {
+      toast.add({
+        severity: "success",
+        summary: "Сообщение скопировано в буфер обмена",
+        life: 3000,
+      });
+    },
+    function (err) {
+      console.error("Произошла ошибка при копировании текста: ", err);
+    }
+  );
 };
-
 </script>
 
 <template>
-  <div :class="orientation === 'right' ? 'flex-row-reverse' : 'flex-row'" class="flex gap-2 w-fit max-w-[600px]">
+  <div
+    :class="orientation === 'right' ? 'flex-row-reverse' : 'flex-row'"
+    class="flex gap-2 w-fit max-w-[600px]"
+  >
     <div
       :class="typeAuthor === 'bot' ? 'bg-gray-400' : 'bg-green-700'"
       class="rounded-full w-8 h-8 max-w-8 max-h-8 p-2 flex items-center justify-center mt-2"
@@ -78,7 +87,7 @@ const handleCopyMessage = () => {
     </div>
     <div class="flex flex-col gap-1">
       <div v-if="answerBody" class="p-1 bg-gray-300/20 rounded-lg px-4">
-        <div class="border-l-[2px] pl-2 border-gray-400/50">
+        <div class="border-l-[2px] pl-2 border-gray-400/50 break-words">
           <p class="text-gray-600/90">TaskHelper</p>
           <p class="text-gray-600/50">{{ answerBody }}</p>
         </div>
@@ -110,8 +119,13 @@ const handleCopyMessage = () => {
               ></path>
             </svg>
           </button>
-          <pre class="leading-4">{{ body }}</pre>
-          <div class="flex flex-row items-center mt-2 justify-between min-w-[200px]">
+          <pre
+            class="whitespace-pre-wrap break-words font-sans text-gray-800 leading-5 text-sm md: max-w-[15em]"
+            >{{ body }}</pre
+          >
+          <div
+            class="flex flex-row items-center mt-2 justify-between min-w-[200px]"
+          >
             <div class="flex flex-row items-center gap-4">
               <button @click="handleCopyMessage" class="cursor-pointer">
                 <svg
@@ -159,7 +173,10 @@ const handleCopyMessage = () => {
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path fill="#F44336" d="M37,43l-13-6l-13,6V9c0-2.2,1.8-4,4-4h18c2.2,0,4,1.8,4,4V43z"></path>
+                  <path
+                    fill="#F44336"
+                    d="M37,43l-13-6l-13,6V9c0-2.2,1.8-4,4-4h18c2.2,0,4,1.8,4,4V43z"
+                  ></path>
                 </svg>
               </button>
               <button class="cursor-pointer" @click="onAnswer">
@@ -203,5 +220,4 @@ const handleCopyMessage = () => {
     </div>
   </div>
   <Toast />
-
 </template>
