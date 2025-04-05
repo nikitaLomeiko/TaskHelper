@@ -12,7 +12,7 @@ const {body, onAnswer, onBookmark, onDelete, orientation = 'left', time, typeAut
 </script>
 
 <template>
-  <div :class="orientation === 'right' ? 'flex-row-reverse' : 'flex-row'" class="flex gap-2 w-full max-w-[500px]">
+  <div :class="orientation === 'right' ? 'flex-row-reverse' : 'flex-row'" class="flex gap-2 w-full max-w-[600px]">
     <div :class="typeAuthor === 'bot' ? 'bg-gray-400' : 'bg-green-700'" class="rounded-full  w-8 h-8 max-w-8 max-h-8 p-2 flex items-center justify-center mt-2">
       <svg
         v-if="typeAuthor === 'bot'"
@@ -46,7 +46,7 @@ const {body, onAnswer, onBookmark, onDelete, orientation = 'left', time, typeAut
       </svg>
     </div>
     <div class="bg-gray-300/40 flex flex-col gap-4 rounded-2xl p-4">
-      <h3 :class="orientation === 'right' ? 'text-end' : 'text-start'" class="text-lg">{{ typeAuthor === 'bot' ? 'Bot' : 'User' }}</h3>
+      <h3 :class="orientation === 'right' ? 'text-end' : 'text-start'" class="text-lg text-green-700">{{ typeAuthor === 'bot' ? 'Bot' : 'User' }}</h3>
       <p class="leading-6">
         {{ body }}
       </p>

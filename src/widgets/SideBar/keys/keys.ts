@@ -2,6 +2,7 @@ export const keysSideBar = [
   {
     label: "Chats",
     icon: "pi pi-envelope",
+    styleClass: "file-item",
     badge: 5,
     items: [
       {
@@ -29,6 +30,7 @@ export const keysSideBar = [
   {
     label: "Create a new chat",
     icon: "pi pi-chart-bar",
+    styleClass: "file-item",
     shortcut: "⌘+R",
   },
   {
