@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import { useChatItemStore } from "entities/chat-item";
 import { ref } from "vue";
 
 const props = defineProps<{
-  title: string;
+  isChanged: boolean;
 }>();
 
-const chatItemStore = useChatItemStore();
 const flag = ref(false);
 </script>
 
 <template>
-  <div class="cont-header flex w-[100%] justify-between px-10 md:gap-[10em]">
-    <h1 class="title">{{ title }}</h1>
+  <div class="container-chats flex items-center gap-10">
+    <div class="chat">{{ el.title }}</div>
     <div
       class="icon"
-      @click="flag = !flag"
+      @click="propisChanged = !props.isChanged"
       style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255)"
     >
       <svg
@@ -31,32 +29,11 @@ const flag = ref(false);
           d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"
         ></path>
       </svg>
-      <transition name="fade"> </transition>
+      <transition name="fade">
+        <div class="btn-chat" v-if="flag"></div>
+      </transition>
     </div>
   </div>
 </template>
 
-<style scoped>
-.icon {
-  position: relative;
-  /* border: 1px solid red; */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.cont-header {
-  border-bottom: 1px solid rgb(84, 84, 84);
-  gap: 65vw;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
+<style></style>

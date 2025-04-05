@@ -2,14 +2,14 @@
 import Button from "primevue/button";
 
 const props = defineProps<{
-  func: any;
-  name: string;
+  funcDelete: () => void;
+  funcChange: () => void;
 }>();
 </script>
 
 <template>
-  <Button @click="func" :label="name" />
+  <Button @click="props.funcDelete" label="Изменить" />
+  <Button @click="props.funcChange" label="Удалить" />
 </template>
 
-<style>
-</style>
+<style></style>
