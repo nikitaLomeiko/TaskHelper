@@ -2,11 +2,22 @@
 import { ref } from "vue";
 import { Button, Sidebar } from "primevue";
 import { useSideBarStore } from "../store/SideBarStore";
-import { panelMenu } from "features/panel-menu";
+import { useChatItemStore, ChatItem } from "entities/chat-item";
+import ChatButton from "features/chat-actions/ui/chatButton.vue";
+import { storeToRefs } from "pinia";
 
 const sideBarStore = useSideBarStore();
+const chatItemStore = useChatItemStore();
+const { chatItems } = storeToRefs(chatItemStore);
 
-const visible = ref(true);
+const changedId = ref<string | null>(null);
+
+const handleChanged = (title: string) => {
+  if (changedId.value !== null) {
+    chatItemStore.updateChatItem(changedId.value, title);
+    changedId.value = null;
+  }
+};
 </script>
 
 <template>
@@ -19,7 +30,26 @@ const visible = ref(true);
       :dismissable="false"
       position="left"
     >
-    
+      <Button class="w-full" label="О сервисе" variant="link" />
+      <Button @click="chatItemStore.addNewChat" class="w-full !mt-2" label="Создать новый чат" />
+
+      <div class="flex flex-col w-full gap-2 mt-10">
+        <div v-if="chatItems.length === 0">
+          <p class="text-gray-500/70 text-center mt-24">Список пуст</p>
+        </div>
+        <ChatItem
+          v-on:sumbit="(title) => handleChanged(title)"
+          :is-changed="el.id === changedId"
+          :value-init="el.title"
+          v-for="el in chatItems"
+          :id="el.id"
+          :title="el.title"
+        >
+          <template #actions>
+            <ChatButton :func-delete="() => chatItemStore.deleteChat(el.id)" :func-change="() => (changedId = el.id)" />
+          </template>
+        </ChatItem>
+      </div>
     </Sidebar>
 
     <Button
@@ -47,5 +77,8 @@ const visible = ref(true);
   background-position: center;
   left: -47px;
   top: 292px;
+}
+
+.btn-chat {
 }
 </style>
