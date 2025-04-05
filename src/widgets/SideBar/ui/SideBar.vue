@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Button, PanelMenu, Sidebar } from "primevue";
-import { keysSideBar } from "./keys/keys";
-import { useSideBarStore } from "./store/SideBarStore";
+import { Button, Sidebar } from "primevue";
+import { useSideBarStore } from "../store/SideBarStore";
+import { panelMenu } from "features/panel-menu";
 
 const sideBarStore = useSideBarStore();
 
@@ -13,19 +13,20 @@ const visible = ref(true);
   <div class="card flex justify-content-center fixed">
     <Sidebar
       v-model:visible="sideBarStore.visible"
-      header="Sidebar"
+      header="TaskHelper"
       class="sidebar w-full md:w-20rem lg:w-30rem"
       :modal="false"
       :dismissable="false"
       position="left"
     >
-      <PanelMenu :model="keysSideBar" />
+    
     </Sidebar>
+
     <Button
       class="btn transform -rotate-90 transition-transform text-center w-[8em]"
-      icon="pi pi-arrow-right"
+      icon="pi pi-bars"
       @click="sideBarStore.visible = true"
-      label="Меню"
+      label=""
     />
   </div>
 </template>
@@ -38,6 +39,12 @@ const visible = ref(true);
 .btn {
   border-radius: none;
   position: absolute;
+  width: 8em;
+  height: 3em;
+  background-image: url(https://icon-library.com/images/hamburger-icon-white/hamburger-icon-white-16.jpg);
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-position: center;
   left: -47px;
   top: 292px;
 }
