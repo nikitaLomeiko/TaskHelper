@@ -2,6 +2,9 @@
 import { ref } from "vue";
 import { Button, PanelMenu, Sidebar } from "primevue";
 import { keysSideBar } from "./keys/keys";
+import { useSideBarStore } from "./store/SideBarStore";
+
+const sideBarStore = useSideBarStore();
 
 const visible = ref(true);
 </script>
@@ -9,16 +12,19 @@ const visible = ref(true);
 <template>
   <div class="card flex justify-content-center fixed">
     <Sidebar
-      v-model:visible="visible"
+      v-model:visible="sideBarStore.visible"
       header="Sidebar"
       class="sidebar w-full md:w-20rem lg:w-30rem"
+      :modal="false"
+      :dismissable="false"
+      position="left"
     >
       <PanelMenu :model="keysSideBar" />
     </Sidebar>
     <Button
       class="btn transform -rotate-90 transition-transform text-center w-[8em]"
       icon="pi pi-arrow-right"
-      @click="visible = true"
+      @click="sideBarStore.visible = true"
       label="Меню"
     />
   </div>

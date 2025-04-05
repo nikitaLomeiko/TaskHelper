@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { Message } from "entities/message";
 import { Sidebar } from "widgets/ui";
+import { useSideBarStore } from "widgets/ui/SideBar/store/SideBarStore";
+
+const sideBarStore = useSideBarStore();
 </script>
 
 <template>
   <Sidebar />
-  <div class="p-10 flex flex-col gap-10">
+  <div
+    :style="{ 'margin-left': sideBarStore.visible ? '20rem' : '0' }"
+    class="p-10 flex flex-col gap-10"
+  >
     <Message
       v-on:delete="() => null"
       v-on:bookmark="() => null"
@@ -40,4 +46,11 @@ import { Sidebar } from "widgets/ui";
   >>>>>>> nikita-dev
 </template>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed; /* Возвращаем overlay на мобильных */
+    z-index: 1000;
+  }
+}
+</style>
