@@ -2,7 +2,6 @@
 import { chatButton } from "features/chat-actions";
 
 const props = defineProps<{ changeChat: any; deleteChat: any }>();
-const emit = defineEmits(["changeChat", "deleteChat"]);
 </script>
 
 <template>

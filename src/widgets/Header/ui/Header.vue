@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useChatItemStore } from "entities/chat-item";
 import ChatItem from "entities/chat-item/ui/chat-item.vue";
 import { ref } from "vue";
 
@@ -6,11 +7,8 @@ const props = defineProps<{
   title: string;
 }>();
 
+const chatItemStore = useChatItemStore();
 const flag = ref(false);
-const deleteChat = () => {};
-const changeChat = () => {};
-
-const items = {};
 </script>
 
 <template>
@@ -36,8 +34,8 @@ const items = {};
       </svg>
       <transition name="fade">
         <ChatItem
-          :delete-chat="deleteChat"
-          :change-chat="changeChat"
+          :delete-chat="chatItemStore.deleteChat"
+          :change-chat="chatItemStore.updateChatItem"
           v-if="flag === true"
         />
       </transition>

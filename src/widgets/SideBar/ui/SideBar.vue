@@ -20,7 +20,7 @@ const visible = ref(true);
       position="left"
     >
       <!-- <PanelMenu :model="keysSideBar" /> -->
-      <div class="title absolute top-0">dasdasdads</div>
+
       <panelMenu />
     </Sidebar>
 
