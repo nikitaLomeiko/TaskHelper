@@ -1,10 +1,9 @@
 <script setup lang="ts">
-  import './stylesheet/index.css'
+import "./stylesheet/index.css";
 </script>
 
 <template>
   <RouterView />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
