@@ -6,10 +6,14 @@ import { useChatItemStore, ChatItem } from "entities/chat-item";
 import ChatButton from "features/chat-actions/ui/chatButton.vue";
 import { storeToRefs } from "pinia";
 import {useWindowSize} from '@vueuse/core'
+import { useRouter } from "vue-router";
+import { Routes } from "shared/config/routes";
 
 const sideBarStore = useSideBarStore();
 const chatItemStore = useChatItemStore();
 const { chatItems } = storeToRefs(chatItemStore);
+
+const router = useRouter()
 
 const changedId = ref<string | null>(null);
 
@@ -33,7 +37,7 @@ const handleChanged = (title: string) => {
       :dismissable="false"
       position="left"
     >
-      <Button class="w-full" label="О сервисе" variant="link" />
+      <Button @click="router.push(Routes.about.name)" class="w-full" label="О сервисе" variant="link" />
       <Button @click="chatItemStore.addNewChat" class="w-full !mt-2" label="Создать новый чат" />
 
       <div class="flex flex-col w-full gap-2 mt-10">
@@ -80,8 +84,5 @@ const handleChanged = (title: string) => {
   background-position: center;
   left: -47px;
   top: 292px;
-}
-
-.btn-chat {
 }
 </style>
