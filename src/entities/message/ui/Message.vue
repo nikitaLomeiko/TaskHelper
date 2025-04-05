@@ -205,5 +205,3 @@ const handleCopyMessage = () => {
   <Toast />
 
 </template>
-
-<style scoped></style>

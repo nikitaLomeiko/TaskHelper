@@ -2,34 +2,22 @@
 import { ref, watch, watchEffect } from "vue";
 import { Button, Sidebar } from "primevue";
 import { useSideBarStore } from "../store/SideBarStore";
-import { IChatItem, useChatItemStore } from "entities/chat-item";
+import { useChatItemStore, ChatItem } from "entities/chat-item";
 import ChatButton from "features/chat-actions/ui/chatButton.vue";
 import { storeToRefs } from "pinia";
 
 const sideBarStore = useSideBarStore();
 const chatItemStore = useChatItemStore();
 const { chatItems } = storeToRefs(chatItemStore);
-const flag = ref(false);
-const newchat = ref({
-  id: "14",
-  content: "dasdasd",
-  title: "new chat",
-});
-const isChanged = ref(false);
 
-console.log(chatItemStore.chatItems);
-const visible = ref(true);
+const changedId = ref<string | null>(null);
 
-const deleteChats = (el: IChatItem) => {
-  chatItemStore.deleteChat(el.id);
+const handleChanged = (title: string) => {
+  if (changedId.value !== null) {
+    chatItemStore.updateChatItem(changedId.value, title);
+    changedId.value = null;
+  }
 };
-// watchEffect(() => {
-//   chatItemStore.chatItems.push({
-//     id: "13",
-//     content: "dasdasd",
-//     title: "new chat",
-//   });
-// });
 </script>
 
 <template>
@@ -37,44 +25,37 @@ const deleteChats = (el: IChatItem) => {
     <Sidebar
       v-model:visible="sideBarStore.visible"
       header="TaskHelper"
-      class="sidebar w-full md:w-20rem lg:w-30rem"
-      :modal="false"
+      class="sidebar w-full md:w-20rem lg:w-30rem sm: !w-screen"
+      :modal="true"
       :dismissable="false"
       position="left"
     >
-      <div
-        class="container-chats flex items-center gap-10"
-        v-for="el in chatItems"
-        :key="el.id"
-      >
-        <div class="chat">{{ el.title }}</div>
-        <div
-          class="icon"
-          @click="flag = !flag"
-          style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255)"
-        >
-          <svg
-            stroke="currentColor"
-            fill="currentColor"
-            stroke-width="0"
-            viewBox="0 0 16 16"
-            height="40px"
-            width="40px"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"
-            ></path>
-          </svg>
-          <transition name="fade">
-            <div class="btn-chat" v-if="flag">
-              <ChatButton
-                :func-change="() => deleteChats(el)"
-                :func-delete="() => deleteChats(el)"
-              />
-            </div>
-          </transition>
+      <Button class="w-full" label="О сервисе" variant="link" />
+      <Button
+        @click="chatItemStore.addNewChat"
+        class="w-full !mt-2"
+        label="Создать новый чат"
+      />
+
+      <div class="flex flex-col w-full gap-2 mt-10">
+        <div v-if="chatItems.length === 0">
+          <p class="text-gray-500/70 text-center mt-24">Список пуст</p>
         </div>
+        <ChatItem
+          v-on:sumbit="(title) => handleChanged(title)"
+          :is-changed="el.id === changedId"
+          :value-init="el.title"
+          v-for="el in chatItems"
+          :id="el.id"
+          :title="el.title"
+        >
+          <template #actions>
+            <ChatButton
+              :func-delete="() => chatItemStore.deleteChat(el.id)"
+              :func-change="() => (changedId = el.id)"
+            />
+          </template>
+        </ChatItem>
       </div>
     </Sidebar>
 
