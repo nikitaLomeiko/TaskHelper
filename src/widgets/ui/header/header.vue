@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { Header } from "widgets/ui";
+import { Menubar } from "primevue";
 </script>
 
 <template>
-  <Header />
-  Home
+  <Menubar />
 </template>
 
 <style scoped></style>
