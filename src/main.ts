@@ -3,6 +3,9 @@ import App from "app/App.vue";
 import PrimeVue from "primevue/config";
 import Aura from "@primeuix/themes/aura";
 import { router } from "app/providers/routing";
+import { createPinia } from "pinia";
+
+const pinia = createPinia();
 
 createApp(App)
   .use(PrimeVue, {
@@ -15,5 +18,6 @@ createApp(App)
       },
     },
   })
+  .use(pinia)
   .use(router)
   .mount("#app");

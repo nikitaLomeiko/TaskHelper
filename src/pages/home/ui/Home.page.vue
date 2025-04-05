@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { Message } from "entities/message";
 import {SendBox} from "features/send-box";
+import { Sidebar } from "widgets/ui";
+import { useSideBarStore } from "widgets/ui/SideBar/store/SideBarStore";
+
+const sideBarStore = useSideBarStore();
+
 </script>
 
 <template>
-  <div class="p-10 flex flex-col gap-10">
+  <Sidebar />
+  <div
+    :style="{ 'margin-left': sideBarStore.visible ? '20rem' : '0' }"
+    class="p-10 flex flex-col gap-10"
+  >
     <Message
       v-on:delete="() => null"
       v-on:bookmark="() => null"
@@ -41,6 +50,14 @@ import {SendBox} from "features/send-box";
     <SendBox message="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo nam commodi aspernatur perspiciatis officia sit quisquam distinctio? Quod, ex! Deserunt beatae ex dolorum quis a enim vel possimus aliquid! Molestiae!
 "/>
   </div>
+  >>>>>>> nikita-dev
 </template>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed; /* Возвращаем overlay на мобильных */
+    z-index: 1000;
+  }
+}
+</style>
