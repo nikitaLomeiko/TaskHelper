@@ -5,7 +5,7 @@ import { IChatItem } from "../types/IChatItem";
 export const useChatItemStore = defineStore("chatItemStore", () => {
   const chatItems = ref<IChatItem[]>([
     {
-      id: "13",
+      id: "main",
       title: "new chat",
     },
   ]);
