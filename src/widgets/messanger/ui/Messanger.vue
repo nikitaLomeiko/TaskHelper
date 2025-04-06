@@ -5,12 +5,16 @@ import { IMessage, Message } from "entities/message";
 import { storeToRefs } from "pinia";
 import { nextTick, onMounted, ref, watch } from "vue";
 import { TypingIndicator } from "shared/ui/typing-indicator";
+import { InfiniteLoader } from "shared/ui/Infinite-loader";
+import { formatTimeMmHh } from "shared/lib/utils/formatTimeMmHh";
+import { ApiClient, Endpoints } from "shared/api";
 
 interface IProps {
-  isReadonly?: boolean
+  isReadonly?: boolean;
+  chatId: string;
 }
 
-const props = defineProps<IProps>()
+const props = defineProps<IProps>();
 
 const chat = useChatStore();
 const { messages } = storeToRefs(chat);
@@ -18,6 +22,46 @@ const { messages } = storeToRefs(chat);
 const messageSelect = ref<IMessage | null>(null);
 const isAnswer = ref<boolean>(false);
 const isChange = ref<boolean>(false);
+
+watch(
+  () => props.chatId,
+  () => {
+    chat.clearData();
+    handleLaodData();
+  }
+);
+
+const handleLaodData = async () => {
+  let lastMeesageDate = messages.value[messages.value.length - 1]?.date;
+
+  if (!lastMeesageDate) {
+    const date = new Date();
+    date.setDate(date.getDate() + 1);
+    lastMeesageDate = date.toISOString().split("T")[0];
+  }
+
+  const data = await ApiClient({
+    url: `${Endpoints.chats}${props.chatId}/hist?until_time=${lastMeesageDate}&amount=100`,
+    method: "GET",
+  });
+
+  if (data.status === 200) {
+    const messsages: IMessage[] = data.data.map((item: any) => {
+      return {
+        id: item.message_id,
+        answerId: item.answered_message_id,
+        typeAuthor: item.message_type_name,
+        answerBody: item.answered_message_content,
+        body: item.content,
+        time: formatTimeMmHh(item.created_at),
+        isBookmarked: item.bookmarked,
+        date: item.created_at,
+      };
+    });
+
+    chat.loadMessages(messsages);
+  }
+};
 
 const clearMessageSelect = () => {
   isChange.value = false;
@@ -41,23 +85,26 @@ const handleSendMessage = (message: IMessage) => {
     chat.addMessage(message);
   }
 
-  clearMessageSelect()
+  clearMessageSelect();
 };
 
 const messagesContainer = ref<HTMLElement | null>(null);
 
-
 const scrollToBottom = () => {
-  nextTick  (() => {
+  nextTick(() => {
     if (messagesContainer.value) {
       messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
     }
   });
 };
 
-watch(messages, () => {
-  scrollToBottom();
-}, { deep: true });
+watch(
+  messages,
+  () => {
+    scrollToBottom();
+  },
+  { deep: true }
+);
 
 onMounted(() => {
   scrollToBottom();
@@ -89,30 +136,30 @@ onMounted(() => {
         praesentium magnam omnis quo voluptates fugit numquam magni facilis illum. Ex quos fugiat enim deleniti!
       </p>
     </div>
-    <div
-      v-for="(item, index) in messages"
-      class="w-full flex"
-      :class="item.typeAuthor === 'user' ? 'justify-end' : 'justify-start'"
-    >
-      <Message
-        :key="index"
-        v-on:delete="() => chat.removeMessage(item.id)"
-        v-on:bookmark="() => chat.toggleBookmark(item.id)"
-        v-on:answer="() => handleAnswerMessage(item)"
-        v-on:change="() => handleChangeMessage(item)"
-        v-on:close=""
-        :type-author="item.typeAuthor"
-        :orientation="item.typeAuthor === 'user' ? 'right' : 'left'"
-        :time="item.time"
-        :body="item.body"
-        :is-bookmarked="item.isBookmarked"
-        :answer-body="item.answerBody"
-      />
-    </div>
+      <div
+        v-for="(item, index) in messages"
+        class="w-full flex"
+        :class="item.typeAuthor === 'user' ? 'justify-end' : 'justify-start'"
+      >
+        <Message
+          :key="index"
+          v-on:delete="() => chat.removeMessage(item.id)"
+          v-on:bookmark="() => chat.toggleBookmark(item.id)"
+          v-on:answer="() => handleAnswerMessage(item)"
+          v-on:change="() => handleChangeMessage(item)"
+          v-on:close=""
+          :type-author="item.typeAuthor"
+          :orientation="item.typeAuthor === 'user' ? 'right' : 'left'"
+          :time="item.time"
+          :body="item.body"
+          :is-bookmarked="item.isBookmarked"
+          :answer-body="item.answerBody"
+        />
+      </div>
   </div>
-  <TypingIndicator class="ml-8"/>
+  <TypingIndicator class="ml-8" />
   <SendBox
-  :is-readonly="props.isReadonly"
+    :is-readonly="props.isReadonly"
     v-on:close-message="clearMessageSelect"
     :message="messageSelect"
     :type-message="isAnswer ? 'answer' : isChange ? 'change' : undefined"

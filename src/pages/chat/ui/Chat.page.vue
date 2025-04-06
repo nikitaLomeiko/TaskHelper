@@ -2,16 +2,16 @@
 import { Messanger } from "widgets/messanger";
 import { SideBar, useSideBarStore } from "widgets/SideBar";
 import { Header } from "widgets/Header";
-import { useChatItemStore } from "entities/chat-item";
-import { storeToRefs } from "pinia";
 import { useWindowSize } from "@vueuse/core";
 import { RouteParams, useRoute } from "vue-router";
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { IChatItem } from "entities/chat-item/types/IChatItem";
+import { useChatItemStore } from "entities/chat-item";
+import { storeToRefs } from "pinia";
 
 const sideBarStore = useSideBarStore();
-const chatItemStore = useChatItemStore();
-const { chatItems } = storeToRefs(chatItemStore);
+const chatItemStore = useChatItemStore()
+const {chatItems} = storeToRefs(chatItemStore)
 
 const { width } = useWindowSize();
 
@@ -24,7 +24,7 @@ watch(
   () => route.params,
   () => {
     chatId.value = (route.params as RouteParams).id as string;
-    findedChat.value = chatItems.value.find((item) => item.id === chatId.value) || null;
+    findedChat.value = chatItems.value.find((item) => String(item.id) === chatId.value) || null;
   }
 );
 </script>
@@ -36,8 +36,8 @@ watch(
     class="px-4 flex flex-col gap-10 h-screen transition-all"
     :class="{ 'bg-gray-50': sideBarStore.visible }"
   >
-    <Header :title="findedChat?.title || 'не известно'" :chat-id="chatId" />
-    <Messanger :is-readonly="findedChat?.isReadOnly" />
+    <Header :title="findedChat?.name || 'не известно'" :chat-id="chatId" />
+    <Messanger :chat-id="chatId" :is-readonly="findedChat?.isReadOnly" />
   </div>
 </template>
 

@@ -8,9 +8,18 @@ import { storeToRefs } from "pinia";
 import { useWindowSize } from "@vueuse/core";
 import { RouteParams, useRoute, useRouter } from "vue-router";
 import { Routes } from "shared/config/routes";
+import { ApiClient, Endpoints } from "shared/api";
 
 const route = useRoute();
 const chatId = ref("");
+
+onMounted(async () => {
+  const data = await ApiClient({ url: Endpoints.chats, method: "GET" });
+
+  if (data.status === 200) {
+    chatItemStore.loadChats(data.data);
+  }
+});
 
 watch(
   () => route.params,
@@ -55,14 +64,14 @@ const handleChanged = (title: string) => {
           <p class="text-gray-500/70 text-center mt-24">Список пуст</p>
         </div>
         <ChatItem
-        :onclick="() => router.push(`/${Routes.chat.name}/${el.id}`)"
-        :is-select="el.id === chatId"
+          :onclick="() => router.push(`/${Routes.chat.name}/${el.id}`)"
+          :is-select="String(el.id) === chatId"
           v-on:sumbit="(title) => handleChanged(title)"
-          :is-changed="el.id === changedId"
-          :value-init="el.title"
+          :is-changed="String(el.id) === changedId"
+          :value-init="el.name"
           v-for="el in chatItems"
-          :id="el.id"
-          :title="el.title"
+          :id="String(el.id)"
+          :name="el.name"
         >
           <template v-if="!el.isNoDelete" #actions>
             <ChatButton :func-delete="() => chatItemStore.deleteChat(el.id)" :func-change="() => (changedId = el.id)" />

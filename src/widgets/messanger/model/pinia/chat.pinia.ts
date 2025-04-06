@@ -5,6 +5,10 @@ import { ref } from "vue";
 export const useChatStore = defineStore("chat", () => {
   const messages = ref<IMessage[]>([]);
 
+  const clearData = () => {
+    messages.value = [];
+  };
+
   const loadMessages = (data: IMessage[]) => {
     messages.value = [...messages.value, ...data];
   };
@@ -40,5 +44,6 @@ export const useChatStore = defineStore("chat", () => {
     removeMessage,
     changeMessage,
     toggleBookmark,
+    clearData,
   };
 });

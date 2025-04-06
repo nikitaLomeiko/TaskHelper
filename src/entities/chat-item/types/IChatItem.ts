@@ -1,6 +1,6 @@
 export interface IChatItem {
   id: string;
-  title: string;
+  name: string;
   isNoDelete?: boolean;
   isReadOnly?: boolean;
 }
