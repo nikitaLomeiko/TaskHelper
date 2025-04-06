@@ -5,8 +5,22 @@ import { IChatItem } from "../types/IChatItem";
 export const useChatItemStore = defineStore("chatItemStore", () => {
   const chatItems = ref<IChatItem[]>([
     {
-      id: "main",
-      title: "new chat",
+      id: "general",
+      title: "General",
+      isNoDelete: true,
+      isReadOnly: false,
+    },
+    {
+      id: "bookmark",
+      title: "Избранное",
+      isNoDelete: true,
+      isReadOnly: true,
+    },
+    {
+      id: "support",
+      title: "Поддрежка",
+      isNoDelete: true,
+      isReadOnly: false,
     },
   ]);
 

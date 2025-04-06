@@ -110,7 +110,7 @@ const handleCopyMessage = () => {
               ></path>
             </svg>
           </button>
-          <pre class="leading-4">{{ body }}</pre>
+          <pre class="whitespace-pre-wrap break-words font-sans text-gray-800 leading-5 text-sm md: max-w-[200px] sm:max-w-[400px] lg:max-w-[600px]">{{ body }}</pre>
           <div class="flex flex-row items-center mt-2 justify-between min-w-[200px]">
             <div class="flex flex-row items-center gap-4">
               <button @click="handleCopyMessage" class="cursor-pointer">

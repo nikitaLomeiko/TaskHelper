@@ -6,7 +6,8 @@ import { useChatItemStore } from "entities/chat-item";
 import { storeToRefs } from "pinia";
 import { useWindowSize } from "@vueuse/core";
 import { RouteParams, useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { IChatItem } from "entities/chat-item/types/IChatItem";
 
 const sideBarStore = useSideBarStore();
 const chatItemStore = useChatItemStore();
@@ -17,9 +18,15 @@ const { width } = useWindowSize();
 const route = useRoute();
 const chatId = ref("");
 
-onMounted(() => {
-  chatId.value = (route.params as RouteParams).id as string;
-});
+const findedChat = ref<IChatItem | null>(null);
+
+watch(
+  () => route.params,
+  () => {
+    chatId.value = (route.params as RouteParams).id as string;
+    findedChat.value = chatItems.value.find((item) => item.id === chatId.value) || null;
+  }
+);
 </script>
 
 <template>
@@ -29,8 +36,8 @@ onMounted(() => {
     class="px-4 flex flex-col gap-10 h-screen transition-all"
     :class="{ 'bg-gray-50': sideBarStore.visible }"
   >
-    <Header :title="chatItems.find(item => item.id === chatId)?.title || 'не известно'" :chat-id="chatId" />
-    <Messanger />
+    <Header :title="findedChat?.title || 'не известно'" :chat-id="chatId" />
+    <Messanger :is-readonly="findedChat?.isReadOnly" />
   </div>
 </template>
 

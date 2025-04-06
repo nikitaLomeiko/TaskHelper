@@ -4,6 +4,13 @@ import { useChatStore } from "../model/pinia/chat.pinia";
 import { IMessage, Message } from "entities/message";
 import { storeToRefs } from "pinia";
 import { nextTick, onMounted, ref, watch } from "vue";
+import { TypingIndicator } from "shared/ui/typing-indicator";
+
+interface IProps {
+  isReadonly?: boolean
+}
+
+const props = defineProps<IProps>()
 
 const chat = useChatStore();
 const { messages } = storeToRefs(chat);
@@ -103,8 +110,9 @@ onMounted(() => {
       />
     </div>
   </div>
-  
+  <TypingIndicator class="ml-8"/>
   <SendBox
+  :is-readonly="props.isReadonly"
     v-on:close-message="clearMessageSelect"
     :message="messageSelect"
     :type-message="isAnswer ? 'answer' : isChange ? 'change' : undefined"

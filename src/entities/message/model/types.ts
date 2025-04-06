@@ -6,6 +6,7 @@ export interface IMessage {
   body: string;
   time: string;
   isBookmarked: boolean;
+  date: Date;
 }
 
 export interface IMessageNotID extends Omit<IMessage, "id" | "answerId"> {}
