@@ -21,7 +21,7 @@ const handleChanged = (title: string) => {
 </script>
 
 <template>
-  <div class="card flex justify-content-center fixed relative">
+  <div class="card flex justify-content-center fixed">
     <Sidebar
       v-model:visible="sideBarStore.visible"
       header="TaskHelper"
@@ -64,7 +64,11 @@ const handleChanged = (title: string) => {
       icon="pi pi-bars"
       @click="sideBarStore.visible = true"
       label=""
-    />
+      ><img
+        class="mask-cover size"
+        src="https://icon-library.com/images/hamburger-icon-white/hamburger-icon-white-16.jpg"
+        alt=""
+    /></Button>
   </div>
 </template>
 
@@ -78,10 +82,10 @@ const handleChanged = (title: string) => {
   position: absolute;
   width: 8em;
   height: 3em;
-  background-image: url(https://icon-library.com/images/hamburger-icon-white/hamburger-icon-white-16.jpg);
+  /* background-image: url(https://icon-library.com/images/hamburger-icon-white/hamburger-icon-white-16.jpg);
   background-repeat: no-repeat;
   background-size: 20%;
-  background-position: center;
+  background-position: center; */
   left: -47px;
   top: 292px;
 }
