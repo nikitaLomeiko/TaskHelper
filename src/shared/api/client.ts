@@ -1,7 +1,8 @@
 import { AxiosInstance, type AxiosRequestConfig } from "axios";
 import { IClient } from "./model/types";
+import { BASE_API } from "./model";
 
-export const ApiClient = async ({ data, method = "GET", url, params, headers }: IClient, scheme: AxiosInstance) => {
+export const ApiClient = async ({ data, method = "GET", url, params, headers }: IClient, scheme: AxiosInstance = BASE_API) => {
   const requestParams: AxiosRequestConfig = {
     method,
     url,
