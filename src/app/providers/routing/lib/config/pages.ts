@@ -9,6 +9,10 @@ export const pages: RouteRecordRaw[] = [
     component: AboutPage,
   },
   {
+    path: '/',
+    component: ChatPage,
+  },
+  {
     path: Routes.chat.path,
     component: ChatPage,
   },

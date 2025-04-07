@@ -8,6 +8,7 @@ import { storeToRefs } from "pinia";
 interface IProps {
   typeMessage?: 'answer' | 'change'
   message?: IMessage | null;
+  isReadonly?: boolean
   
   promptInit?: string;
   onCloseMessage?: () => void;
@@ -118,6 +119,7 @@ const handleSubmit = () => {
         <p class="text-gray-600 !text-sm line-clamp-2">{{ props.message.body }}</p>
       </div>
       <Textarea
+        :readonly="props.isReadonly"
         :onkeydown="handleNativeKeyDown"
         size="large"
         placeholder="Введите текст"

@@ -5,8 +5,22 @@ import { IChatItem } from "../types/IChatItem";
 export const useChatItemStore = defineStore("chatItemStore", () => {
   const chatItems = ref<IChatItem[]>([
     {
-      id: "13",
-      title: "new chat",
+      id: "general",
+      name: "General",
+      isNoDelete: true,
+      isReadOnly: false,
+    },
+    {
+      id: "bookmark",
+      name: "Избранное",
+      isNoDelete: true,
+      isReadOnly: true,
+    },
+    {
+      id: "support",
+      name: "Поддрежка",
+      isNoDelete: true,
+      isReadOnly: false,
     },
   ]);
 
@@ -16,7 +30,7 @@ export const useChatItemStore = defineStore("chatItemStore", () => {
 
   const addNewChat = () => {
     const newId = Math.random().toString(36);
-    chatItems.value.push({ id: newId, title: `Новый чат#${newId}` });
+    chatItems.value.push({ id: newId, name: `Новый чат#${newId}` });
   };
 
   function deleteChat(id: string) {
@@ -27,7 +41,7 @@ export const useChatItemStore = defineStore("chatItemStore", () => {
   function updateChatItem(id: string, title: string) {
     const data = chatItems.value.find((item) => item.id === id);
     if (data) {
-      data.title = title;
+      data.name = title;
     }
   }
 

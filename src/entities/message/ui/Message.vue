@@ -119,6 +119,7 @@ const handleCopyMessage = () => {
               ></path>
             </svg>
           </button>
+<<<<<<< HEAD
           <pre
             class="whitespace-pre-wrap break-words font-sans text-gray-800 leading-5 text-sm md: max-w-[15em]"
             >{{ body }}</pre
@@ -126,6 +127,10 @@ const handleCopyMessage = () => {
           <div
             class="flex flex-row items-center mt-2 justify-between min-w-[200px]"
           >
+=======
+          <pre class="whitespace-pre-wrap break-words font-sans text-gray-800 leading-5 text-sm md: max-w-[200px] sm:max-w-[400px] lg:max-w-[600px]">{{ body }}</pre>
+          <div class="flex flex-row items-center mt-2 justify-between min-w-[200px]">
+>>>>>>> 3b17dd9724b16bddd40969cf3402a0e44e760095
             <div class="flex flex-row items-center gap-4">
               <button @click="handleCopyMessage" class="cursor-pointer">
                 <svg

@@ -6,6 +6,7 @@ interface IProps extends IChatItem {
   isChanged?: boolean;
   valueInit?: string;
   onSumbit?: (title: string) => void;
+  isSelect?: boolean
 }
 
 const props = defineProps<IProps>();
@@ -34,12 +35,18 @@ const handleSumbit = () => {
         изменить
       </button>
     </div>
+<<<<<<< HEAD
     <div
       class="flex flex-row items-center justify-between w-full p-2 rounded-md transition-colors cursor-pointer hover:bg-gray-300/50"
       v-else
     >
       <div class="chat">{{ props.title }}</div>
       <slot name="actions" />
+=======
+    <div :class="isSelect ? 'bg-green-600' : 'hover:bg-gray-300/50'" class="flex flex-row items-center justify-between w-full p-2 rounded-md transition-colors cursor-pointer" v-else>
+      <div class="chat">{{ props.name }}</div>
+      <slot name="actions"/>
+>>>>>>> nikita-dev
     </div>
   </div>
 </template>
